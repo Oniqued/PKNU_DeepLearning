@@ -22,3 +22,16 @@ test_data = datasets.FashionMNIST(
     transform=ToTensor(),
 )
 
+batch_size = 64
+
+# 데이터로더를 생성합니다.
+train_dataloader = DataLoader(training_data, batch_size=batch_size)
+test_dataloader = DataLoader(test_data, batch_size=batch_size)
+
+for X, y in test_dataloader:
+    print("Shape of X [N, C, H, W]: {}".format(X.shape))
+    print("Shape of y: {} {}".format(y.shape, y.dtype))
+    print(y)
+    print(X.requires_grad, y.requires_grad)
+    break
+
