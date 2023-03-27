@@ -48,3 +48,33 @@ print(f"Device tensor is stored on: {tensor.device}")
 if torch.cuda.is_available():
     tensor = tensor.to("cuda")
 
+# NumPy 방식의 인덱싱과 슬라이싱
+tensor = torch.tensor([[1,2,3,4],
+                       [5,6,7,8],
+                       [9,10,11,12],
+                       [13,14,15,16]
+                       ])
+print(f"First row: {tensor[0]}")
+print(f"First column: {tensor[:, 0]}")
+print(f"Last column: {tensor[..., -1]}")    # ...은 앞쪽의 모든 차원에 대해서 "모든 범위"임을 의미한다. 3차원 이상의 다차원 배열을 다룰 때 유용한 표현이다.
+tensor[:,1] = 0
+print(tensor)
+
+# 텐서 합치기
+tensor = torch.tensor([[1,2,3,4],
+                       [5,6,7,8],
+                       [9,10,11,12]])
+t0 = torch.cat([tensor, tensor])
+print(t0)
+t1 = torch.cat([tensor, tensor], dim = 1) # dim을 지정하여 어떤 축으로 연결할지 지정한다
+print(t1)
+
+# torch.stack
+t2 = torch.stack([tensor, tensor])
+print(t2.shape)
+print(t2)
+
+#axis 인자
+t3 = torch.stack([tensor, tensor], axis=1)
+print(t3.shape)
+print(t3)
