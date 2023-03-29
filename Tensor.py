@@ -47,7 +47,6 @@ print(f"Device tensor is stored on: {tensor.device}")
 # 텐서 연산 (Operation)
 if torch.cuda.is_available():
     tensor = tensor.to("cuda")
-
 # NumPy 방식의 인덱싱과 슬라이싱
 tensor = torch.tensor([[1,2,3,4],
                        [5,6,7,8],
@@ -79,4 +78,21 @@ t3 = torch.stack([tensor, tensor], axis=1)
 print(t3.shape)
 print(t3)
 
-#
+# 텐서 모양 변경하기
+a = torch.arange(12)
+a
+a1 = torch.reshape(a, (3,4))
+a1
+
+b = torch.reshape(a, (-1,2,3)) # 크기가 유추 가능할 경우 -1로 표시 가능
+print(b)
+print(b.shape)
+
+#squeeze, unsqueeze 메서드
+x = torch.rand(1,1,20,128)
+x = x.squeeze() # [1,1,20,128] -> [20,128]
+print(x.shape)
+
+x2 = torch.rand(1,1,20,128)
+x2 = x2.squeeze(dim=1) # [1,1,20,128] -> [1,20,128]
+print(x2.shape)
