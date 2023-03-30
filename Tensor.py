@@ -96,3 +96,7 @@ print(x.shape)
 x2 = torch.rand(1,1,20,128)
 x2 = x2.squeeze(dim=1) # [1,1,20,128] -> [1,20,128]
 print(x2.shape)
+
+x = torch.rand([2,3])
+x1 = torch.unsqueeze(x,0)
+x1.shape
