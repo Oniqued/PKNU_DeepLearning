@@ -29,3 +29,11 @@ test_ds = datasets.CIFAR10(
     target_transform=transforms.Lambda(
         lambda y: torch.zeros(10, dtype=torch.float).scatter_(0, torch.tensor(y), value=1))
 )
+
+X, y = train_ds[0]
+print(X)
+print(X.shape)
+print(X.mean(), X.std(), X.max(), X.min())
+
+print(y)
+print(y.shape)
