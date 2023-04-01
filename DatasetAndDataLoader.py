@@ -69,3 +69,9 @@ class CustomImageDataset(Dataset): #세가지 메서드 구현 필요
                 label = self.target_transform(label)
             return image, label
 
+# DataLoader로 학습용 데이터 준비하기
+from torch.utils.data import DataLoader
+
+train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
+test_dataloader = DataLoader(test_data, batch_size=64, shuffle=False)
+
