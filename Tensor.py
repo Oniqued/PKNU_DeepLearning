@@ -146,3 +146,8 @@ print(torch.prod(d))       # product of all numbers
 agg = tensor.sum()   # 1 + 2 + ... + 12 = 78
 agg_item = agg.item()
 print(agg_item, type(agg_item))
+
+# 바꿔치기(in-place) 연산
+print(f"{tensor} \n")
+tensor.add_(5)
+print(tensor)
