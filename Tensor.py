@@ -47,6 +47,7 @@ print(f"Device tensor is stored on: {tensor.device}")
 # 텐서 연산 (Operation)
 if torch.cuda.is_available():
     tensor = tensor.to("cuda")
+
 # NumPy 방식의 인덱싱과 슬라이싱
 tensor = torch.tensor([[1,2,3,4],
                        [5,6,7,8],
@@ -73,30 +74,75 @@ t2 = torch.stack([tensor, tensor])
 print(t2.shape)
 print(t2)
 
-#axis 인자
+# axis 인자
 t3 = torch.stack([tensor, tensor], axis=1)
 print(t3.shape)
 print(t3)
 
-# 텐서 모양 변경하기
-a = torch.arange(12)
-a
-a1 = torch.reshape(a, (3,4))
-a1
+# 산술연산
+# 텐서와 스칼라간의 기본적인 산술 연산을 지원한다
+ones = torch.zeros(2,2) + 1
+twos = torch.ones(2,2)*2
+threes = (torch.ones(2,2)*7-1)/2
+fours = twos**2
+sqrt2s = twos ** 0.5
 
-b = torch.reshape(a, (-1,2,3)) # 크기가 유추 가능할 경우 -1로 표시 가능
-print(b)
-print(b.shape)
+print(ones)
+print(twos)
+print(threes)
+print(fours)
+print(sqrt2s)
 
-#squeeze, unsqueeze 메서드
-x = torch.rand(1,1,20,128)
-x = x.squeeze() # [1,1,20,128] -> [20,128] // 인자가 주어지지 않으면 크기가 1인 차원이 모두 제거됨
-print(x.shape)
+fives = ones + fours
+print(fives)
 
-x2 = torch.rand(1,1,20,128)
-x2 = x2.squeeze(dim=1) # [1,1,20,128] -> [1,20,128] # dim인자가 주어지면 [1]번째 차원이 제거됨
-print(x2.shape)
+# 요소별 곱(element-wise product)을 계산한다. dozens1, dozens2는 같은 값을 갖는다.
+dozens1 = threes * fours
+dozens2 = threes.mul(fours)
+print(dozens1)
+print(dozens2)
 
-x = torch.rand([2,3])
-x1 = torch.unsqueeze(x,0)
-x1.shape
+#두 텐서 간의 행렬곱(matrix multiplication)을 계산한다. y1, y2는 같은 값을 갖는다.
+y1 = tensor @ tensor.T
+y2 = tensor.matmul(tensor.T)
+print(y1)
+print(y2)
+
+#Broadcasting
+A = torch.rand(2, 4)
+B = torch.ones(1, 4) * 2
+print(A)
+print(B)
+C = A + B
+print(C)
+D = A * B
+print(D)
+
+# 기타 산술연산
+# common functions
+a = torch.rand(2, 4) * 2 - 1
+print(a)
+print('Common functions:')
+print(torch.abs(a))
+print(torch.ceil(a))  # 올림 연산
+print(torch.floor(a)) # 내림 연산
+print(torch.clamp(a, -0.5, 0.5)) # -0.5 이하는 -0.5로, 0.5 이상은 0.5로 변환
+
+# comparisons:
+print('\nBroadcasted, element-wise equality comparison:')
+d = torch.tensor([[1., 2.], [3., 4.]])
+e = torch.ones(1, 2)  # many comparison ops support broadcasting!
+print(torch.eq(d, e)) # returns a tensor of type bool
+
+# reductions:
+print('\nReduction ops:')
+print(torch.max(d))        # returns a single-element tensor
+print(torch.min(d))        # returns a single-element tensor
+print(torch.mean(d))       # average
+print(torch.std(d))        # standard deviation
+print(torch.prod(d))       # product of all numbers
+
+# 단일요소 텐서
+agg = tensor.sum()   # 1 + 2 + ... + 12 = 78
+agg_item = agg.item()
+print(agg_item, type(agg_item))
