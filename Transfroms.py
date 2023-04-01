@@ -1,0 +1,31 @@
+import torch
+from torchvision import datasets
+import torchvision.transforms as transforms
+
+train_ds = datasets.CIFAR10(
+    root="data",
+    train=True,
+    download=True,
+
+    transform=transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Resize((36, 36)),
+        transforms.RandomCrop((32, 32)),
+        transforms.RandomHorizontalFlip(),
+        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])]),
+    target_transform=transforms.Lambda(
+        lambda y: torch.zeros(10, dtype=torch.float).scatter_(0, torch.tensor(y), value=1))
+)
+
+test_ds = datasets.CIFAR10(
+    root="data",
+    train=False,
+    download=True,
+
+    transform=transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Resize((32, 32)),
+        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])]),
+    target_transform=transforms.Lambda(
+        lambda y: torch.zeros(10, dtype=torch.float).scatter_(0, torch.tensor(y), value=1))
+)
