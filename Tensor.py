@@ -162,3 +162,10 @@ print(f"n: {n}")
 t.add_(1)
 print(f"t: {t}")
 print(f"n: {n}")
+
+# NumPy 배열을 텐서로 변환하기
+n = np.ones(5)
+t = torch.from_numpy(n)
+np.add(n, 1, out=n)
+print(f"t: {t}")
+print(f"n: {n}")
