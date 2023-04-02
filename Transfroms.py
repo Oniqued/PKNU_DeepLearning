@@ -45,3 +45,7 @@ transform = transforms.Compose([
                        transforms.RandomCrop((32, 32)),
                        transforms.RandomHorizontalFlip(),
                        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])]),
+
+# Lambda 변형
+target_transform = transforms.Lambda(lambda y: torch.zeros(10, dtype=torch.float).scatter_(0, torch.tensor(y), value=1))
+
