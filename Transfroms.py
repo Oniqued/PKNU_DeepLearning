@@ -76,3 +76,12 @@ landmarks = landmarks.astype('float').reshape(-1, 2)
 print('Image name: {}'.format(img_name))
 print('Landmarks shape: {}'.format(landmarks.shape))
 print('First 4 Landmarks: {}'.format(landmarks[:4]))
+
+# 랜드마크 점 표시해서 디스플레이
+def show_landmarks(image, landmarks):
+    """Show image with landmarks"""
+    plt.imshow(image)
+    plt.scatter(landmarks[:, 0], landmarks[:, 1], s=10, marker='.', c='r')
+    plt.show()
+
+show_landmarks(Image.open(os.path.join(data_dir, img_name)), landmarks)
