@@ -37,3 +37,11 @@ print(X.mean(), X.std(), X.max(), X.min())
 
 print(y)
 print(y.shape)
+
+# TorchVision이 제공하는 미리 정의된 transform 기능들
+transform = transforms.Compose([
+                       transforms.ToTensor(),
+                       transforms.Resize((36,36)),
+                       transforms.RandomCrop((32, 32)),
+                       transforms.RandomHorizontalFlip(),
+                       transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])]),
