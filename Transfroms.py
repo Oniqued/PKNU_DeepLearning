@@ -302,7 +302,6 @@ for i_batch, sample_batched in enumerate(dataloader):
 dataloader = DataLoader(transformed_dataset, batch_size=4,
                         shuffle=True, num_workers=0)
 
-
 # Helper function to show a batch
 def show_landmarks_batch(sample_batched):
     """Show image with landmarks for a batch of samples."""
