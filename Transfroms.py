@@ -291,7 +291,50 @@ for i_batch, sample_batched in enumerate(dataloader):
     # observe 4th batch and stop.
     if i_batch == 3:
         plt.figure()
-        # show_landmarks(sample_batched['image'][0].numpy().transpose((1, 2, 0)), sample_batched['landmarks'][0])
+        show_landmarks(sample_batched['image'][0].numpy().transpose((1, 2, 0)), sample_batched['landmarks'][0])
+        show_landmarks_batch(sample_batched)
+        plt.axis('off')
+        plt.ioff()
+        plt.show()
+        break
+
+# 데이터로더 생성 및 샘플 데이터 추출 후 디스플레이
+dataloader = DataLoader(transformed_dataset, batch_size=4,
+                        shuffle=True, num_workers=0)
+
+
+# Helper function to show a batch
+def show_landmarks_batch(sample_batched):
+    """Show image with landmarks for a batch of samples."""
+    images_batch, landmarks_batch = \
+            sample_batched['image'], sample_batched['landmarks']
+    batch_size = len(images_batch)
+    im_size = images_batch.size(2)
+    grid_border_size = 2
+
+    grid = utils.make_grid(images_batch)
+    grid = grid / 2 + 0.5
+    plt.imshow(grid.numpy().transpose((1, 2, 0)))
+
+    for i in range(batch_size):
+        plt.scatter(landmarks_batch[i, :, 0].numpy() + i * im_size + (i + 1) * grid_border_size,
+                    landmarks_batch[i, :, 1].numpy() + grid_border_size,
+                    s=10, marker='.', c='r')
+
+        plt.title('Batch from dataloader')
+
+# if you are using Windows, uncomment the next line and indent the for loop.
+# you might need to go back and change "num_workers" to 0.
+
+# if __name__ == '__main__':
+for i_batch, sample_batched in enumerate(dataloader):
+    print(i_batch, sample_batched['image'].size(),
+          sample_batched['landmarks'].size())
+
+    # observe 4th batch and stop.
+    if i_batch == 3:
+        plt.figure()
+        show_landmarks(sample_batched['image'][0].numpy().transpose((1, 2, 0)), sample_batched['landmarks'][0])
         show_landmarks_batch(sample_batched)
         plt.axis('off')
         plt.ioff()
