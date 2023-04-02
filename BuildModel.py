@@ -99,3 +99,9 @@ input_images = torch.rand(3, 1, 28, 28)
 logits = seq_modules(input_images)
 print(logits)
 
+# 모델 매개변수
+# 각 매개변수들을 순회하며, 매개변수의 크기와 값을 출력한다.
+print(f"Model structure: {model}\n\n")
+
+for name, param in model.named_parameters(): # 두 개의 값을 엑세스 가능하다
+    print(f"Layer: {name} | Size: {param.size()} | Values : {param[:2]} \n") # 두 개만 프린트 해보자자
