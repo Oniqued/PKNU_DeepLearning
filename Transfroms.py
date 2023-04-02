@@ -65,3 +65,14 @@ data_dir = 'content/faces'
 # 얼굴 랜드마크 정보를 저장하는 주석 파일 열기
 landmarks_frame = pd.read_csv(data_dir + '/face_landmarks.csv')
 landmarks_frame
+
+# 66번 행 상세보기
+n = 66
+img_name = landmarks_frame.iloc[n, 0]
+landmarks = landmarks_frame.iloc[n, 1:]
+landmarks = np.asarray(landmarks)
+landmarks = landmarks.astype('float').reshape(-1, 2)
+
+print('Image name: {}'.format(img_name))
+print('Landmarks shape: {}'.format(landmarks.shape))
+print('First 4 Landmarks: {}'.format(landmarks[:4]))
