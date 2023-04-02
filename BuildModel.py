@@ -50,3 +50,13 @@ class NeuralNetwork2(nn.Module):  # 512와 1024 차이 뿐 다른건 같은 코�
 # NeuralNetwork의 인스턴스를 생성하고 이를 device로 이동한 뒤, 구조를 출력한다.
 model = NeuralNetwork().to(device) # 필요한 작업... CPU 쓸건지 GPU 쓸건지
 print(model)
+
+# 랜덤 픽셀로 구성된 2개의 흑백이미지를 nn.Softmax를 이용해서 출력해본다.
+X = torch.rand(2, 1, 28, 28, device=device)  # 2 random grayscale images / 픽셀값은 랜덤인 2개의 이미지
+logits = model(X)
+print('logits: {}'.format(logits))
+pred_probab = nn.Softmax(dim=1)(logits) # softMax가 적용되는 함수가 1차원 이기 때문에 dim=1
+print('pred_probab: {}'.format(pred_probab))
+
+y_pred = pred_probab.argmax(1) # argmax? 10개의 텐서 중 몇번째 값이 최댓값인지 찾아주는 함수 '(1)'은 '축'이라는 뜻(?) //아래 Predicted class: tensor([0, 8]) 는 최대값이 각각 이미지 별로 0과 8이다.
+print(f"Predicted class: {y_pred}")
