@@ -123,28 +123,8 @@ class FaceLandmarksDataset(Dataset):
 
         return sample
 
-    face_dataset = FaceLandmarksDataset(csv_file=data_dir + '/face_landmarks.csv',
-                                        root_dir=data_dir)
+# 데이터를 추출하여 디스플레이
 
-    # fig = plt.figure()
-
-    for i, sample in enumerate(face_dataset):
-        # sample = face_dataset[i]
-
-        print(i, sample['image'].shape, sample['landmarks'].shape)
-        show_landmarks(sample['image'], sample['landmarks'])
-
-        # ax = plt.subplot(1, 4, i + 1)
-        # plt.tight_layout()
-        # ax.set_title('Sample #{}'.format(i))
-        # ax.axis('off')
-        # show_landmarks(**sample)
-
-        if i == 3:
-            # plt.show()
-            break
-
-# 데이터 추출하여 디스플레이
 face_dataset = FaceLandmarksDataset(csv_file=data_dir + '/face_landmarks.csv',
                                     root_dir=data_dir)
 
