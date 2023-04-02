@@ -124,7 +124,6 @@ class FaceLandmarksDataset(Dataset):
         return sample
 
 # 데이터를 추출하여 디스플레이
-
 face_dataset = FaceLandmarksDataset(csv_file=data_dir + '/face_landmarks.csv',
                                     root_dir=data_dir)
 
@@ -145,3 +144,76 @@ for i, sample in enumerate(face_dataset):
     if i == 3:
         # plt.show()
         break
+
+# 이미지 크기를 균일하게 만들기, 랜드마크 포인트 좌표 변경
+class Rescale(object):
+    """Rescale the image in a sample to a given size.
+
+    Args:
+        output_size (tuple): Desired output size.
+    """
+
+    def __init__(self, output_size):
+        self.output_size = output_size
+
+    def __call__(self, sample):
+        image, landmarks = sample['image'], sample['landmarks']
+
+        h, w = image.shape[:2]
+        new_h, new_w = self.output_size
+
+        img = Image.fromarray(image)
+        img = img.resize((new_h, new_w), resample=0)
+        img = np.array(img)
+        # img = transform.resize(image, (new_h, new_w))
+
+        # h and w are swapped for landmarks because for images,
+        # x and y axes are axis 1 and 0 respectively
+        landmarks = landmarks * [new_w / w, new_h / h]
+
+        return {'image': img, 'landmarks': landmarks}
+
+class RandomCrop(object):
+    """Crop randomly the image in a sample.
+
+    Args:
+        output_size (tuple): Desired output size.
+    """
+
+    def __init__(self, output_size):
+        self.output_size = output_size
+
+    def __call__(self, sample):
+        image, landmarks = sample['image'], sample['landmarks']
+
+        h, w = image.shape[:2]
+        new_h, new_w = self.output_size
+
+        top = np.random.randint(0, h - new_h)
+        left = np.random.randint(0, w - new_w)
+
+        image = image[top: top + new_h,
+                      left: left + new_w]
+
+        landmarks = landmarks - [left, top]
+
+        return {'image': image, 'landmarks': landmarks}
+
+# Rescale, RandomCrop 테스트
+scale = Rescale((256, 256))
+crop = RandomCrop((128, 128))
+composed = transforms.Compose([Rescale((256, 256)),
+                               RandomCrop((224, 224))])
+
+# Apply each of the above transforms on sample.
+fig = plt.figure()
+sample = face_dataset[66]
+for i, tsfrm in enumerate([scale, crop, composed]):
+    transformed_sample = tsfrm(sample)
+
+    ax = plt.subplot(1, 3, i + 1)
+    plt.tight_layout()
+    ax.set_title(type(tsfrm).__name__)
+    show_landmarks(**transformed_sample)
+
+plt.show()
