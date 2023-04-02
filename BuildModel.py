@@ -60,3 +60,14 @@ print('pred_probab: {}'.format(pred_probab))
 
 y_pred = pred_probab.argmax(1) # argmax? 10개의 텐서 중 몇번째 값이 최댓값인지 찾아주는 함수 '(1)'은 '축'이라는 뜻(?) //아래 Predicted class: tensor([0, 8]) 는 최대값이 각각 이미지 별로 0과 8이다.
 print(f"Predicted class: {y_pred}")
+
+# nn.Softmax ?
+softmax = nn.Softmax(dim=1)
+pred_probab = softmax(logits)
+pred_probab
+
+# 모델 계층
+# 3개의 랜덤 이미지의 계층을 출력해보자
+input_images = torch.rand(3, 1, 28, 28) # 2 random grayscale images
+print(input_images)
+print(input_images.size())
