@@ -71,3 +71,31 @@ pred_probab
 input_images = torch.rand(3, 1, 28, 28) # 2 random grayscale images
 print(input_images)
 print(input_images.size())
+
+# nn.Flatten
+flatten = nn.Flatten()
+flat_image = flatten(input_images)
+print(flat_image.size())
+
+# nn.Linear
+layer1 = nn.Linear(in_features=28*28, out_features=20) # 노드가 20개인 리니어 레이어 (곧, 출력 벡터의 사이즈즈)
+hidden1 = layer1(flat_image)
+print(hidden1.size())
+print(hidden1)
+
+# nn.ReLU
+print(f"Before ReLU: {hidden1}\n\n")
+hidden1 = nn.ReLU()(hidden1)
+print(f"After ReLU: {hidden1}") # 음수는 0으로, 양수는 그대로 출력된 것을 볼 수 있다.
+
+# nn.Sequential
+seq_modules = nn.Sequential(
+    flatten,
+    layer1,
+    nn.ReLU(),
+    nn.Linear(20, 10)
+)
+input_images = torch.rand(3, 1, 28, 28)
+logits = seq_modules(input_images)
+print(logits)
+
