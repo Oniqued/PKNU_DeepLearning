@@ -125,11 +125,11 @@ for t in range(epochs):
     test(test_dataloader, model, loss_fn)
 print("Done!")
 
-torch.save(model.state_dict(), "model.pth")
+torch.save(model.state_dict(), "../model.pth")
 print("Saved PyTorch Model State to model.pth")
 
 model = NeuralNetwork()
-model.load_state_dict(torch.load("model.pth"))
+model.load_state_dict(torch.load("../model.pth"))
 
 classes = [
     "T-shirt/top",
@@ -151,3 +151,4 @@ with torch.no_grad():
     pred = model(x)
     predicted, actual = classes[pred[0].argmax(0)], classes[y]
     print(f'Predicted: "{predicted}", Actual: "{actual}"')
+

@@ -61,7 +61,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 from PIL import Image
 
-data_dir = 'content/faces'
+data_dir = '../content/faces'
 # 얼굴 랜드마크 정보를 저장하는 주석 파일 열기
 landmarks_frame = pd.read_csv(data_dir + '/face_landmarks.csv')
 landmarks_frame

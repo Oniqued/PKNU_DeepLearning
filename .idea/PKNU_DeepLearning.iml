@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/assignment/assignment01/helen/train" />
       <excludeFolder url="file://$MODULE_DIR$/data" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="deeplenv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
